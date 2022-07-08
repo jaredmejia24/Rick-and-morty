@@ -5,8 +5,8 @@ import { useState } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 
 const override = {
-    color: "black",
-    margin: "auto",
+  color: "black",
+  margin: "auto",
 };
 
 const Residents = ({ resident }) => {
@@ -15,23 +15,30 @@ const Residents = ({ resident }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    axios.get(resident).then((res) => {
-      setCharacter(res.data);
-      setIsLoading(false);
-      if (res.data.status === "Alive") {
-        setStatusColor("green");
-      } else if (res.data.status === "Dead") {
-        setStatusColor("red");
-      } else {
-        setStatusColor("gray");
-      }
-    });
+    axios
+      .get(resident)
+      .then((res) => {
+        setCharacter(res.data);
+        if (res.data.status === "Alive") {
+          setStatusColor("green");
+        } else if (res.data.status === "Dead") {
+          setStatusColor("red");
+        } else {
+          setStatusColor("gray");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
 
   return (
     <li className="character-info">
       {isLoading ? (
-        <ClipLoader cssOverride={override} size={130}/>
+        <ClipLoader cssOverride={override} size={130} />
       ) : (
         <>
           <img
