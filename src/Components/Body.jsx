@@ -5,6 +5,7 @@ import { useState } from "react";
 import Residents from "./Residents";
 import SearchOptions from "./SearchOptions";
 import { ClipLoader } from "react-spinners";
+import Pagination from "./Pagination";
 
 const override = {
   display: "flex",
@@ -18,9 +19,26 @@ const Body = () => {
   const [focused, setFocused] = useState(false);
   const [inputHidden, setInputHidden] = useState("hidden");
   const [isLoading, setIsLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [byPage, setBypage] = useState(10);
+  let maxLengthInPage = 0;
+  let arrayIterationOfPages = [];
+
+  if (location.residents?.length !== 0) {
+    maxLengthInPage = location.residents?.length / byPage;
+    for (let i = 1; i < maxLengthInPage + 1; i++) {
+      arrayIterationOfPages.push(i);
+    }
+  }
 
   const onFocus = () => setFocused(true);
   const onBlur = () => setFocused(false);
+
+
+  useEffect(()=>{
+    setPage(1);
+    setFocused(false);
+  },[location])
 
   useEffect(() => {
     const random = Math.floor(Math.random() * 126) + 1;
@@ -80,7 +98,7 @@ const Body = () => {
         </button>
       </div>
       {isLoading ? (
-        <ClipLoader color="white" cssOverride={override} size={300}/>
+        <ClipLoader color="white" cssOverride={override} size={300} />
       ) : (
         <>
           {searchValue !== "" && (
@@ -130,10 +148,30 @@ const Body = () => {
           <div className="residents">
             {location.residents?.length > 0 ? (
               <>
-                <h2>Residents</h2>
+              <ul className="button-pages-container">
+                  {arrayIterationOfPages.map((i) => (
+                    <Pagination
+                      key={i}
+                      page={i}
+                      setPage={setPage}
+                    />
+                  ))}
+                </ul>
+                <h2 id="pageBody">Residents</h2>
                 <ul className="all-residents">
-                  {location.residents.map((resident) => (
-                    <Residents key={resident} resident={resident} />
+                  {location.residents
+                    .slice((page - 1) * byPage, (page - 1) * byPage + byPage)
+                    .map((resident) => (
+                      <Residents key={resident} resident={resident} />
+                    ))}
+                </ul>
+                <ul className="button-pages-container">
+                  {arrayIterationOfPages.map((i) => (
+                    <Pagination
+                      key={i}
+                      page={i}
+                      setPage={setPage}
+                    />
                   ))}
                 </ul>
               </>

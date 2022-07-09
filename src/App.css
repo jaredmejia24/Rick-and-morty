@@ -4,6 +4,11 @@
   --light-brown: #443737;
   --white: #ffffff;
 }
+
+html{
+  scroll-behavior: smooth;
+}
+
 body {
   color: var(--white);
   background-color: var(--brown);
@@ -137,4 +142,28 @@ body {
 
 .each-search-option:active{
   color: rgb(7, 163, 163);
+}
+
+.button-pages-container{
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  margin: 4rem 0;
+  gap: 1rem;
+}
+
+.button-pages-container li a{
+  text-decoration: none;
+  list-style: none;
+  cursor: pointer;
+  padding: 1.4rem;
+  border-radius: 50%;
+  background-color: var(--dark-brown);
+  color: aqua;
+  font-size: 1.3rem;
+}
+
+.button-pages-container li a:hover{
+  color: black;
+  background-color: aqua;
 }
