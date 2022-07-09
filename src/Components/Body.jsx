@@ -51,7 +51,7 @@ const Body = () => {
       } else {
         setInputHidden("hidden");
       }
-    },1)
+    },300)
   }, [focused]);
 
   return (
