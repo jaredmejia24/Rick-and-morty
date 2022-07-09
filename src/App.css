@@ -1,5 +1,6 @@
 :root {
   --brown: #272121;
+  --dark-brown: #1b1616;
   --light-brown: #443737;
   --white: #ffffff;
 }
@@ -14,7 +15,7 @@ body {
 }
 
 .header-container {
-  height: 30vh;
+  height: 18rem;
   background-image: url('https://img.europapress.es/fotoweb/fotonoticia_20210620111333_1200.jpg');
   background-position: 0;
   background-repeat: no-repeat;
@@ -22,15 +23,15 @@ body {
 }
 
 .input-search {
-  display: flex;
+  display: grid;
+  grid-template-columns: 65rem 6rem;
   justify-content: center;
   gap: 0.2rem;
 }
 
 .seach-bar {
   text-align: center;
-  width: 65rem;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.2rem;
   color: var(--white);
   font-size: 1rem;
   height: 1.5rem;
@@ -107,4 +108,33 @@ body {
   border-top: 1px solid white;
   padding: 2rem;
   text-align: center;
+}
+
+.search-options-container{
+  list-style: none;
+  position: absolute;
+  margin-top: 42px; 
+  left: -100px; 
+  right: 0; 
+  margin-left: auto; 
+  margin-right: auto; 
+  padding: 1rem;
+  background-color: var(--dark-brown);
+  display: flex;
+  width: 63rem;
+  flex-direction: column;
+}
+
+.each-search-option{
+  padding: 1rem;
+}
+
+.each-search-option:hover{
+  cursor: pointer;
+  background-color: #443737;
+  color: aqua;
+}
+
+.each-search-option:active{
+  color: rgb(7, 163, 163);
 }
