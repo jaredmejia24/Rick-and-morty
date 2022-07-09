@@ -4,6 +4,12 @@ import { useEffect } from "react";
 import { useState } from "react";
 import Residents from "./Residents";
 import SearchOptions from "./SearchOptions";
+import { ClipLoader } from "react-spinners";
+
+const override = {
+  display: "flex",
+  margin: "4rem auto",
+};
 
 const Body = () => {
   const [location, setLocation] = useState({});
@@ -11,6 +17,7 @@ const Body = () => {
   const [searchValue, setSearchValue] = useState("");
   const [focused, setFocused] = useState(false);
   const [inputHidden, setInputHidden] = useState("hidden");
+  const [isLoading, setIsLoading] = useState(false);
 
   const onFocus = () => setFocused(true);
   const onBlur = () => setFocused(false);
@@ -71,66 +78,73 @@ const Body = () => {
         <button onClick={changeLocation} className="search-button">
           Search
         </button>
-        {searchValue !== "" && (
-          <ul
-            style={{ visibility: inputHidden }}
-            className="search-options-container"
-          >
-            {allLocations
-              .filter((location) => {
-                if (
-                  searchValue !== "" &&
-                  location.name
-                    .toLowerCase()
-                    .includes(searchValue.toLowerCase())
-                ) {
-                  return location;
-                }
-              })
-              .map((location) => (
-                <SearchOptions
-                  onblur={onBlur}
-                  setLocation={setLocation}
-                  location={location}
-                  key={location.id}
-                />
-              ))}
-          </ul>
-        )}
       </div>
-      <div className="location-info">
-        <h2>{location.name}</h2>
-        <ul>
-          <li>
-            <b>type: </b>
-            {location.type}
-          </li>
-          <li>
-            <b>dimension: </b>
-            {location.dimension}
-          </li>
-          <li>
-            <b>population: </b>
-            {location.residents?.length}
-          </li>
-        </ul>
-      </div>
-      <div className="residents">
-        {location.residents?.length > 0 ? (
-          <>
-            <h2>Residents</h2>
-            <ul className="all-residents">
-              {location.residents.map((resident) => (
-                <Residents key={resident} resident={resident} />
-              ))}
+      {isLoading ? (
+        <ClipLoader color="white" cssOverride={override} size={300}/>
+      ) : (
+        <>
+          {searchValue !== "" && (
+            <ul
+              style={{ visibility: inputHidden }}
+              className="search-options-container"
+            >
+              {allLocations
+                .filter((location) => {
+                  if (
+                    searchValue !== "" &&
+                    location.name
+                      .toLowerCase()
+                      .includes(searchValue.toLowerCase())
+                  ) {
+                    return location;
+                  }
+                })
+                .map((location) => (
+                  <SearchOptions
+                    onblur={onBlur}
+                    setIsLoading={setIsLoading}
+                    setLocation={setLocation}
+                    location={location}
+                    key={location.id}
+                  />
+                ))}
             </ul>
-          </>
-        ) : (
-          <div style={{ marginTop: "1rem" }} className="character-info">
-            <h3 style={{ margin: "auto" }}>No residents</h3>
+          )}
+          <div className="location-info">
+            <h2>{location.name}</h2>
+            <ul>
+              <li>
+                <b>type: </b>
+                {location.type}
+              </li>
+              <li>
+                <b>dimension: </b>
+                {location.dimension}
+              </li>
+              <li>
+                <b>population: </b>
+                {location.residents?.length}
+              </li>
+            </ul>
           </div>
-        )}
-      </div>
+          <div className="residents">
+            {location.residents?.length > 0 ? (
+              <>
+                <h2>Residents</h2>
+                <ul className="all-residents">
+                  {location.residents.map((resident) => (
+                    <Residents key={resident} resident={resident} />
+                  ))}
+                </ul>
+              </>
+            ) : (
+              <div style={{ marginTop: "1rem" }} className="character-info">
+                <h3 style={{ margin: "auto" }}>No residents</h3>
+              </div>
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };
