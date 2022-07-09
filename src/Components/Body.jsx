@@ -9,7 +9,7 @@ const Body = () => {
   const [location, setLocation] = useState({});
   const [allLocations, setAllLocations] = useState([]);
   const [searchValue, setSearchValue] = useState("");
-  const [focused, setFocused] = React.useState(false);
+  const [focused, setFocused] = useState(false);
   const [inputHidden, setInputHidden] = useState("hidden");
 
   const onFocus = () => setFocused(true);
@@ -45,13 +45,11 @@ const Body = () => {
   }, [searchValue]);
 
   useEffect(() => {
-    setTimeout(()=>{
-      if (focused) {
-        setInputHidden("visible");
-      } else {
-        setInputHidden("hidden");
-      }
-    },300)
+    if (focused) {
+      setInputHidden("visible");
+    } else {
+      setInputHidden("hidden");
+    }
   }, [focused]);
 
   return (
@@ -59,9 +57,8 @@ const Body = () => {
       <h1 style={{ textAlign: "center" }}>Rick and Morty Wiki</h1>
       <div className="input-search">
         <input
-        autoComplete="off"
+          autoComplete="off"
           onFocus={onFocus}
-          onBlur={onBlur}
           id="searchBar"
           className="seach-bar"
           type="text"
@@ -92,7 +89,8 @@ const Body = () => {
               })
               .map((location) => (
                 <SearchOptions
-                setLocation={setLocation}
+                  onblur={onBlur}
+                  setLocation={setLocation}
                   location={location}
                   key={location.id}
                 />
