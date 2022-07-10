@@ -147,9 +147,11 @@ body {
 .button-pages-container{
   list-style: none;
   display: flex;
+  width: 65rem;
+  flex-wrap: wrap;
   justify-content: center;
-  margin: 4rem 0;
-  gap: 1rem;
+  margin: 4rem 3.5rem;
+  gap: 5rem 1rem;
 }
 
 .button-pages-container li a{
