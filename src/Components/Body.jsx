@@ -106,18 +106,7 @@ const Body = () => {
               style={{ visibility: inputHidden }}
               className="search-options-container"
             >
-              {allLocations
-                .filter((location) => {
-                  if (
-                    searchValue !== "" &&
-                    location.name
-                      .toLowerCase()
-                      .includes(searchValue.toLowerCase())
-                  ) {
-                    return location;
-                  }
-                })
-                .map((location) => (
+              {allLocations.map((location) => (
                   <SearchOptions
                     onblur={onBlur}
                     setIsLoading={setIsLoading}
